@@ -1,11 +1,40 @@
-<body>
-    <table class="monitoring">
-        <thead>
+<?php
+
+/** 
+ * Affichage de la partie monitoring : liste des articles avec tri.
+ */
+?>
+
+<h2>Monitoring des articles</h2>
+
+
+<div class="monitoring">
+    <table border="1"><thead>
             <tr>
-                <th>Titre</th>
-                <th>Nombre de vues</th>
-                <th>Nombre de commentaires</th>
-                <th>Date de publication</th>
+                <th>
+                    <a href="index.php?action=showMonitoring&sort=title&order=<?= ($sort === 'title' && $order === 'ASC') ? 'DESC' : 'ASC' ?>">
+                        Titre
+                        <?= ($sort === 'title' && $order === 'ASC') ? '🔼' : '🔽' ?>
+                    </a>
+                </th>
+                <th>
+                    <a href="index.php?action=showMonitoring&sort=nbre_vues&order=<?= ($sort === 'nbre_vues' && $order === 'ASC') ? 'DESC' : 'ASC' ?>">
+                        Nombre de vues
+                        <?= ($sort === 'nbre_vues' && $order === 'ASC') ? '🔼' : '🔽' ?>
+                    </a>
+                </th>
+                <th>
+                    <a href="index.php?action=showMonitoring&sort=nbre_commentaires&order=<?= ($sort === 'nbre_commentaires' && $order === 'ASC') ? 'DESC' : 'ASC' ?>">
+                        Nombre de commentaires
+                        <?= ($sort === 'nbre_commentaires' && $order === 'ASC') ? '🔼' : '🔽' ?>
+                    </a>
+                </th>
+                <th>
+                    <a href="index.php?action=showMonitoring&sort=date_creation&order=<?= ($sort === 'date_creation' && $order === 'ASC') ? 'DESC' : 'ASC' ?>">
+                        Date de publication
+                        <?= ($sort === 'date_creation' && $order === 'ASC') ? '🔼' : '🔽' ?>
+                    </a>
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -19,4 +48,6 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-</body>
+</div>
+
+<div><a class="submit" href="index.php?action=admin">Revenir à la page des articles</a></div>

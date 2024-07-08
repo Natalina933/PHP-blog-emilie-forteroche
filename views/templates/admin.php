@@ -9,7 +9,9 @@
 <h2>Edition des articles</h2>
 
 <!-- Ajout du lien vers la page de monitoring -->
-<a class="submit" href="index.php?action=showMonitoring">Accéder au monitoring des articles</a>
+<span>
+    <a class="submit" href="index.php?action=showMonitoring">Accéder au monitoring</a>
+</span>
 
 
 <div class="adminArticle">
