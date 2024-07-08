@@ -9,7 +9,8 @@
 
 
 <div class="monitoring">
-    <table border="1"><thead>
+    <table border="1">
+        <thead>
             <tr>
                 <th>
                     <a href="index.php?action=showMonitoring&sort=title&order=<?= ($sort === 'title' && $order === 'ASC') ? 'DESC' : 'ASC' ?>">
@@ -49,5 +50,5 @@
         </tbody>
     </table>
 </div>
-
-<div><a class="submit" href="index.php?action=admin">Revenir à la page des articles</a></div>
+<br>
+<a class="submit" href="index.php?action=admin">Revenir à la page des articles</a>
