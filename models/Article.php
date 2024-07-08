@@ -9,6 +9,7 @@
     private int $idUser;
     private string $title = "";
     private string $content = "";
+    private int $nbre_vues;
     private ?DateTime $dateCreation = null;
     private ?DateTime $dateUpdate = null;  
 
@@ -78,7 +79,23 @@
         }
         return $this->content;
     }
+ /**
+     * Setter pour le nombre de vues.
+     * @param int $nbreVues
+     */
+    public function setNbreVues(int $nbreVues): void
+    {
+        $this->nbre_vues = $nbreVues;
+    }
 
+    /**
+     * Getter pour le nombre de vues.
+     * @return int
+     */
+    public function getNbreVues(): int
+    {
+        return $this->nbre_vues;
+    }
     /**
      * Setter pour la date de création. Si la date est une string, on la convertit en DateTime.
      * @param string|DateTime $dateCreation
