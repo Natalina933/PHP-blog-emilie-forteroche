@@ -65,5 +65,17 @@ class CommentManager extends AbstractEntityManager
         $result = $this->db->query($sql, ['id' => $comment->getId()]);
         return $result->rowCount() > 0;
     }
-
+/**
+     * Récupère le nombre de commentaires pour un article donné.
+     * @param int $articleId : l'id de l'article.
+     * @return int : le nombre de commentaires.
+     */
+    public function countCommentsByArticleId(int $articleId): int
+    {
+        $sql = "SELECT COUNT(*) as count FROM comment WHERE id_article = :articleId";
+        $stmt = $this->db->query($sql);
+        $stmt->execute(['articleId' => $articleId]);
+        $result = $stmt->fetch();
+        return $result['count'];
+    }
 }
