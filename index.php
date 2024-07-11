@@ -78,7 +78,7 @@ try {
             $monitoringController = new MonitoringController();
             $monitoringController->showMonitoring();
             break;
-
+            //création du controller delete commentaire
         case 'deleteComment':
             $monitoringController = new MonitoringController();
             $monitoringController->deleteComment();

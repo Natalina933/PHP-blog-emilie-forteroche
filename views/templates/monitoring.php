@@ -1,3 +1,8 @@
+<?php 
+/**
+ * création de la page Monitoring
+ */
+?>
 <h2>Monitoring des articles</h2>
 
 <div class="monitoring">

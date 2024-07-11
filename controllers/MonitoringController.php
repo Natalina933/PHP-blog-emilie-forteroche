@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * création de la classes MonitoringController.
+ * création des fonctions voir mes tableaux 
+ * et supprimer un commentaire.
+ **/
 class MonitoringController
 {
     public function showMonitoring()
@@ -21,6 +25,9 @@ class MonitoringController
             'order' => $order
         ]);
     }
+    /**
+     * création de la fonction pour supprimer un commentaire.
+     */
     public function deleteComment()
     {
         $commentId = Utils::request('id');
