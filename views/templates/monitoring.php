@@ -1,10 +1,3 @@
-<?php
-
-/** 
- * Affichage de la partie monitoring : liste des articles avec tri.
- */
-?>
-
 <h2>Monitoring des articles</h2>
 
 <div class="monitoring">
@@ -59,6 +52,7 @@
                 <th>Pseudo</th>
                 <th>Contenu</th>
                 <th>Date de création</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -67,6 +61,9 @@
                     <td><?= htmlspecialchars($comment->getPseudo()) ?></td>
                     <td><?= htmlspecialchars($comment->getContent()) ?></td>
                     <td><?= htmlspecialchars($comment->getDateCreation()->format('Y-m-d H:i:s')) ?></td>
+                    <td>
+                        <a href="index.php?action=deleteComment&id=<?= $comment->getId() ?>" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?');">Supprimer</a>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

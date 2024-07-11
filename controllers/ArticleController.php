@@ -56,14 +56,5 @@ class ArticleController
      * @param int $articleId : l'identifiant de l'article.
      * @throws Exception Si une erreur survient lors de l'exécution de la requête SQL.
      */
-    public function incrementArticleViews(int $articleId): void
-    {
-        try {
-            $updateSql = "UPDATE article SET nbre_vues = nbre_vues + 1 WHERE id = :articleId";
-            $stmt = $this->db->prepare($updateSql);
-            $stmt->execute(['articleId' => $articleId]);
-        } catch (PDOException $e) {
-            throw new Exception("Erreur lors de l'incrémentation des vues de l'article {$articleId} : " . $e->getMessage());
-        }
-    }
+   
 }

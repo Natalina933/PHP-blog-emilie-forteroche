@@ -78,4 +78,15 @@ class CommentManager extends AbstractEntityManager
         $result = $stmt->fetch();
         return $result['count'];
     }
+    public function getAllComments() : array
+    {
+        $sql = "SELECT * FROM comment";
+        $result = $this->db->query($sql);
+        $comments = [];
+
+        while ($comment = $result->fetch()) {
+            $comments[] = new Comment($comment);
+        }
+        return $comments;
+    }
 }

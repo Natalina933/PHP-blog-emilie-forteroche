@@ -74,17 +74,15 @@ try {
             $adminController->deleteArticle();
             break;
             //création du controller articles
-        case 'showArticleMonitoring':
+        case 'showMonitoring':
             $monitoringController = new MonitoringController();
-            $monitoringController->showArticleMonitoring();
-            break;
-        
-            //création du controller commentaire
-        case 'showCommentMonitoring':
-            $commentController = new MonitoringController();
-            $commentController->showCommentMonitoring();
+            $monitoringController->showMonitoring();
             break;
 
+        case 'deleteComment':
+            $monitoringController = new MonitoringController();
+            $monitoringController->deleteComment();
+            break;
 
 
         default:

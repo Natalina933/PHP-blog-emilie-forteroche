@@ -93,23 +93,7 @@ class ArticleManager extends AbstractEntityManager
         $this->db->query($sql, ['id' => $id]);
     }
 
-    /**
-     * Incrémente le compteur de vues d'un article.
-     * @param int $articleId : l'identifiant de l'article.
-     * @throws Exception Si une erreur survient lors de l'exécution de la requête SQL.
-     */
-    public function incrementArticleViews(int $articleId): void
-    {
-        try {
-            // Mettre à jour le compteur de vues dans la table article
-            $updateSql = "UPDATE article SET nbre_vues = nbre_vues + 1 WHERE id = :articleId";
-            $stmt = $this->db->query($updateSql);
-            $stmt->execute(['articleId' => $articleId]);
-        } catch (PDOException $e) {
-            // Gérer les erreurs SQL en lançant une exception
-            throw new Exception("Erreur lors de l'incrémentation des vues de l'article {$articleId} : " . $e->getMessage());
-        }
-    }
+    
 }
 ?>
 }
