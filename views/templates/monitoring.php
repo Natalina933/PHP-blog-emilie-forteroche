@@ -7,7 +7,6 @@
 
 <h2>Monitoring des articles</h2>
 
-
 <div class="monitoring">
     <table border="1">
         <thead>
@@ -50,5 +49,29 @@
         </tbody>
     </table>
 </div>
+
+<h2>Monitoring des commentaires</h2>
+
+<div class="monitoring">
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Pseudo</th>
+                <th>Contenu</th>
+                <th>Date de création</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($comments as $comment) : ?>
+                <tr>
+                    <td><?= htmlspecialchars($comment->getPseudo()) ?></td>
+                    <td><?= htmlspecialchars($comment->getContent()) ?></td>
+                    <td><?= htmlspecialchars($comment->getDateCreation()->format('Y-m-d H:i:s')) ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
 <br>
 <a class="submit" href="index.php?action=admin">Revenir à la page des articles</a>
