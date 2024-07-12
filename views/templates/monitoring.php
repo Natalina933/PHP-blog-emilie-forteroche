@@ -40,7 +40,7 @@
                 <tr>
                     <td><?= htmlspecialchars($article->getTitle()) ?></td>
                     <td><?= htmlspecialchars($article->getNbreVues()) ?></td>
-                    <!-- <td><?= htmlspecialchars($article->getNbreCommentaires()) ?></td> -->
+                    <td><?= htmlspecialchars($article->getNbreCommentaires()) ?></td>
                     <td><?= htmlspecialchars($article->getDateCreation()->format('Y-m-d H:i:s')) ?></td>
                 </tr>
             <?php endforeach; ?>
