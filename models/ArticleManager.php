@@ -32,6 +32,7 @@ class ArticleManager extends AbstractEntityManager
         $result = $this->db->query($sql, ['id' => $id]);
         $article = $result->fetch();
         if ($article) {
+            $this->incrementViews($id);
             return new Article($article);
         }
         return null;
