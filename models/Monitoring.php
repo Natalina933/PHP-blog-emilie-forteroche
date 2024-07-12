@@ -98,6 +98,23 @@ class Monitoring extends AbstractEntity
         return $this->nbre_vues;
     }
     /**
+     * Setter pour le nombre de commentaires.
+     * @param int $nbreComments
+     */
+    public function setNbreCommentaires(int $nbreComments): void
+    {
+        $this->nbre_commentaires = $nbreComments;
+    }
+
+    /**
+     * Getter pour le nombre de commentaires.
+     * @return int
+     */
+    public function getNbreCommentaires(): int
+    {
+        return $this->nbre_commentaires;
+    }
+    /**
      * Setter pour la date de création. Si la date est une string, on la convertit en DateTime.
      * @param string|DateTime $dateCreation
      * @param string $format : le format pour la convertion de la date si elle est une string.

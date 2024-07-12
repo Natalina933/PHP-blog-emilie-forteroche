@@ -91,6 +91,7 @@ class Article extends AbstractEntity
     {
         $this->nbreVues = $nbreVues;
     }
+    
     public function getNbreCommentaires(): int
     {
         return $this->nbreCommentaires;

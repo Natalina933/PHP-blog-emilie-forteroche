@@ -51,19 +51,38 @@ class CommentManager extends AbstractEntityManager
             'content' => $comment->getContent(),
             'idArticle' => $comment->getIdArticle()
         ]);
+        if ($result->rowCount() > 0) {
+            // Mettre à jour le nombre de commentaires
+            $this->updateCommentCount($comment->getIdArticle());
+        }
         return $result->rowCount() > 0;
     }
 
+
+
     /**
      * Supprime un commentaire.
+     * 
      * @param Comment $comment : l'objet Comment à supprimer.
      * @return bool : true si la suppression a réussi, false sinon.
      */
     public function deleteComment(Comment $comment): bool
     {
+        $id = $comment->getId();
         $sql = "DELETE FROM comment WHERE id = :id";
-        $result = $this->db->query($sql, ['id' => $comment->getId()]);
-        return $result->rowCount() > 0;
+        $pdo = $this->db->getPDO();
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        
+        if ($stmt->execute())
+        {
+            // Mettre à jour le nombre de commentaires
+            $this->updateCommentCount($comment->getIdArticle());
+
+            return true;
+        }
+
+        return false;
     }
     /**
      * Récupère le nombre de commentaires pour un article donné.
@@ -77,6 +96,16 @@ class CommentManager extends AbstractEntityManager
         $stmt->execute(['articleId' => $articleId]);
         $result = $stmt->fetch();
         return $result['count'];
+    }
+    public function updateCommentCount(int $articleId): void
+    {
+        $sql = "UPDATE article 
+        SET nbre_commentaires = (SELECT COUNT(*) FROM comment WHERE id_article = :articleId) 
+        WHERE id = :articleId";
+        $pdo = $this->db->getPDO();
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':articleId', $articleId, PDO::PARAM_INT);
+        $stmt->execute();
     }
     public function getAllComments(): array
     {
