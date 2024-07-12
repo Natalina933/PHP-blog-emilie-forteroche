@@ -10,6 +10,7 @@ class Monitoring extends AbstractEntity
     private string $title = "";
     private string $content = "";
     private int $nbre_vues;
+    private int $nbre_commentaires;
     private ?DateTime $dateCreation = null;
     private ?DateTime $dateUpdate = null;
 

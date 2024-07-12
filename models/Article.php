@@ -91,16 +91,15 @@ class Article extends AbstractEntity
     {
         $this->nbreVues = $nbreVues;
     }
+    // public function getNbreCommentaires(): int
+    // {
+    //     return $this->nbreCommentaires;
+    // }
 
-    public function getNbreCommentaires(): int
-    {
-        return $this->nbreCommentaires;
-    }
-
-    public function setNbreCommentaires(int $nbreCommentaires): void
-    {
-        $this->nbreCommentaires = $nbreCommentaires;
-    }
+    // public function setNbreCommentaires(int $nbreCommentaires): void
+    // {
+    //     $this->nbreCommentaires = $nbreCommentaires;
+    // }
 
     /**
      * Setter pour la date de création. Si la date est une string, on la convertit en DateTime.

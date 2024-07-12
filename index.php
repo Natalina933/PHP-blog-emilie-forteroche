@@ -21,11 +21,17 @@ try {
             $articleController = new ArticleController();
             $articleController->showApropos();
             break;
-
+            /**
+             * Affichage d'un article spécifique.
+             * Récupère l'ID de l'article depuis la requête, instancie le contrôleur de l'article,
+             * et appelle la méthode showArticle avec l'ID pour afficher les détails de l'article.
+             */
         case 'showArticle':
+            $idArticle = Utils::request('id');
             $articleController = new ArticleController();
-            $articleController->showArticle();
+            $articleController->showArticle($idArticle);
             break;
+
 
         case 'addArticle':
             $articleController = new ArticleController();
