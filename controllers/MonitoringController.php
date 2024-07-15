@@ -1,53 +1,38 @@
 <?php
-/**
- * création de la classes MonitoringController.
- * création des fonctions voir mes tableaux 
- * et supprimer un commentaire.
- **/
+
 class MonitoringController
 {
     public function showMonitoring()
     {
-        $sort = Utils::request('sort', 'date_creation');
-        $order = Utils::request('order', 'DESC');
+        // Récupération des paramètres de tri et de pagination pour les articles
+        $sortArticle = Utils::request('sortArticle', 'date_creation');
+        $orderArticle = Utils::request('orderArticle', 'DESC');
+        $page = Utils::request('page', 1); // Page courante, par défaut 1
+        $limit = 10; // Nombre d'articles par page
+        $offset = ($page - 1) * $limit; // Offset pour la pagination
 
+        // Instanciation du manager
         $monitoringManager = new MonitoringManager();
-        $articles = $monitoringManager->getMonitoringData($sort, $order);
 
+        // Récupération des articles triés avec pagination
+        $articles = $monitoringManager->getArticlesSorted($sortArticle, $orderArticle, $offset, $limit);
+
+        // Récupération des commentaires avec tri par id_article si spécifié
+        $sortComment = Utils::request('sortComment', 'date_creation');
+        $orderComment = Utils::request('orderComment', 'DESC');
         $commentManager = new CommentManager();
-        $comments = $commentManager->getAllComments();
+        $comments = $commentManager->getCommentsSorted($sortComment, $orderComment);
 
+        // Affichage de la vue avec les données récupérées
         $view = new View('Monitoring');
         $view->render('monitoring', [
             'articles' => $articles,
             'comments' => $comments,
-            'sort' => $sort,
-            'order' => $order
+            'sortArticle' => $sortArticle,
+            'orderArticle' => $orderArticle,
+            'sortComment' => $sortComment,
+            'orderComment' => $orderComment,
+            'currentPage' => $page,
         ]);
     }
-    /**
-     * création de la fonction pour supprimer un commentaire.
-     */
-    public function deleteComment()
-    {
-        $commentId = Utils::request('id');
-        if (!$commentId) {
-            throw new Exception("ID de commentaire manquant.");
-        }
-
-        $commentManager = new CommentManager();
-        $comment = $commentManager->getCommentById($commentId);
-        if (!$comment) {
-            throw new Exception("Commentaire introuvable.");
-        }
-
-        $result = $commentManager->deleteComment($comment);
-        if (!$result) {
-            throw new Exception("Échec de la suppression du commentaire.");
-        }
-
-        // Rediriger vers la page de monitoring après suppression
-        Utils::redirect('showMonitoring');
-    }
 }
-

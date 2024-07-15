@@ -1,19 +1,40 @@
 <?php
 
 /**
- * Cette classe sert à gérer les commentaires. 
+ * Cette classe sert à gérer les commentaires.
  */
 class CommentManager extends AbstractEntityManager
 {
     /**
-     * Récupère tous les commentaires d'un article.
-     * @param int $idArticle : l'id de l'article.
-     * @return array : un tableau d'objets Comment.
+     * Récupère tous les commentaires avec possibilité de tri par colonne spécifiée.
+     * Si $idArticle est spécifié, les commentaires seront filtrés par cet article.
+     * @param int|null $idArticle : (optionnel) l'id de l'article pour filtrer les commentaires.
+     * @param string $sort : la colonne de tri.
+     * @param string $order : l'ordre de tri (ASC ou DESC).
+     * @return array : un tableau d'objets Comment triés.
      */
-    public function getAllCommentsByArticleId(int $idArticle): array
+    public function getAllComments(?int $idArticle = null, string $sort = 'date_creation', string $order = 'DESC'): array
     {
-        $sql = "SELECT * FROM comment WHERE id_article = :idArticle";
-        $result = $this->db->query($sql, ['idArticle' => $idArticle]);
+        // Définir les colonnes autorisées pour le tri
+        $allowedSortColumns = ['id', 'pseudo', 'content', 'date_creation', 'id_article'];
+        if (!in_array($sort, $allowedSortColumns)) {
+            $sort = 'date_creation';
+        }
+        if ($order !== 'ASC' && $order !== 'DESC') {
+            $order = 'DESC';
+        }
+
+        $sql = "SELECT * FROM comment";
+        $params = [];
+
+        if ($idArticle !== null) {
+            $sql .= " WHERE id_article = :idArticle";
+            $params['idArticle'] = $idArticle;
+        }
+
+        $sql .= " ORDER BY $sort $order";
+
+        $result = $this->db->query($sql, $params);
         $comments = [];
 
         while ($comment = $result->fetch()) {
@@ -58,11 +79,8 @@ class CommentManager extends AbstractEntityManager
         return $result->rowCount() > 0;
     }
 
-
-
     /**
      * Supprime un commentaire.
-     * 
      * @param Comment $comment : l'objet Comment à supprimer.
      * @return bool : true si la suppression a réussi, false sinon.
      */
@@ -73,9 +91,8 @@ class CommentManager extends AbstractEntityManager
         $pdo = $this->db->getPDO();
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        
-        if ($stmt->execute())
-        {
+
+        if ($stmt->execute()) {
             // Mettre à jour le nombre de commentaires
             $this->updateCommentCount($comment->getIdArticle());
 
@@ -84,6 +101,7 @@ class CommentManager extends AbstractEntityManager
 
         return false;
     }
+
     /**
      * Récupère le nombre de commentaires pour un article donné.
      * @param int $articleId : l'id de l'article.
@@ -97,19 +115,35 @@ class CommentManager extends AbstractEntityManager
         $result = $stmt->fetch();
         return $result['count'];
     }
+
+    /**
+     * Met à jour le nombre de commentaires pour un article donné.
+     * @param int $articleId : l'id de l'article.
+     */
     public function updateCommentCount(int $articleId): void
     {
         $sql = "UPDATE article 
-        SET nbre_commentaires = (SELECT COUNT(*) FROM comment WHERE id_article = :articleId) 
-        WHERE id = :articleId";
+                SET nbre_commentaires = (SELECT COUNT(*) FROM comment WHERE id_article = :articleId) 
+                WHERE id = :articleId";
         $pdo = $this->db->getPDO();
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':articleId', $articleId, PDO::PARAM_INT);
         $stmt->execute();
     }
-    public function getAllComments(): array
+    public function getCommentsSorted(string $sort, string $order): array
     {
-        $sql = "SELECT * FROM comment";
+        // Sécuriser les colonnes de tri pour éviter les injections SQL
+        $allowedSortColumns = ['id', 'pseudo', 'content', 'date_creation', 'id_article'];
+        if (!in_array($sort, $allowedSortColumns)) {
+            $sort = 'date_creation';
+        }
+        if ($order !== 'ASC' && $order !== 'DESC') {
+            $order = 'DESC';
+        }
+
+        // Modifier la requête SQL pour trier correctement par id_article si nécessaire
+        $orderByClause = ($sort === 'id_article') ? "id_article $order" : "$sort $order";
+        $sql = "SELECT * FROM comment ORDER BY $orderByClause";
         $result = $this->db->query($sql);
         $comments = [];
 

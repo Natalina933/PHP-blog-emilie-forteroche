@@ -132,12 +132,17 @@ class Article extends AbstractEntity
      * @param string $format : le format pour la convertion de la date si elle est une string.
      * Par défaut, c'est le format de date mysql qui est utilisé.
      */
-    public function setDateUpdate(string|DateTime $dateUpdate, string $format = 'Y-m-d H:i:s'): void
+    public function setDateUpdate($dateUpdate): void
     {
-        if (is_string($dateUpdate)) {
-            $dateUpdate = DateTime::createFromFormat($format, $dateUpdate);
+        if ($dateUpdate === null) {
+            $this->dateUpdate = null; // Ou tout autre traitement nécessaire pour gérer null
+        } elseif (is_string($dateUpdate)) {
+            $this->dateUpdate = new DateTime($dateUpdate);
+        } elseif ($dateUpdate instanceof DateTime) {
+            $this->dateUpdate = $dateUpdate;
+        } else {
+            throw new InvalidArgumentException('Invalid date format provided.');
         }
-        $this->dateUpdate = $dateUpdate;
     }
 
     /**

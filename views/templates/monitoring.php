@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 1/création de la page Monitoring
  */
@@ -155,3 +156,4 @@
 
     <br>
     <a class="submit" href="index.php?action=admin">Revenir à la page des articles</a>
+</body>
