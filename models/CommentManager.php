@@ -152,4 +152,16 @@ class CommentManager extends AbstractEntityManager
         }
         return $comments;
     }
+    public function getAllCommentsByArticleId(int $idArticle): array
+    {
+        $sql = "SELECT * FROM comment WHERE id_article = :idArticle";
+        $result = $this->db->query($sql, ['idArticle' => $idArticle]);
+        $comments = [];
+
+        while ($comment = $result->fetch()) {
+            $comments[] = new Comment($comment);
+        }
+        return $comments;
+    }
+
 }

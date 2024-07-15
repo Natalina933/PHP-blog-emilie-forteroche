@@ -35,4 +35,35 @@ class MonitoringController
             'currentPage' => $page,
         ]);
     }
+    public function deleteComment()
+    {
+        // Récupérer les IDs des commentaires à supprimer à partir des données POST
+        $commentIds = Utils::request('commentIds');
+
+        // Vérifier si des commentaires ont été sélectionnés
+        if (!isset($commentIds) || !is_array($commentIds) || empty($commentIds)) {
+            throw new Exception("Aucun commentaire sélectionné pour la suppression.");
+        }
+
+        // Instancier le gestionnaire de commentaires
+        $commentManager = new CommentManager();
+
+        // Parcourir tous les IDs des commentaires et les supprimer un par un
+        foreach ($commentIds as $commentId) {
+            // Récupérer le commentaire par son ID
+            $comment = $commentManager->getCommentById($commentId);
+            if (!$comment) {
+                throw new Exception("Commentaire introuvable pour l'ID: $commentId.");
+            }
+
+            // Supprimer le commentaire
+            $result = $commentManager->deleteComment($comment);
+            if (!$result) {
+                throw new Exception("Échec de la suppression du commentaire avec l'ID: $commentId.");
+            }
+        }
+
+        // Rediriger vers la page de monitoring après la suppression
+        Utils::redirect('showMonitoring');
+    }
 }
