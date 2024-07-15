@@ -20,13 +20,13 @@ class ArticleController
      * Affiche le détail d'un article.
      * @return void
      */
-    public function showArticle() : void
+    public function showArticle($shouldIncrementViews = false) : void
     {
         // Récupération de l'id de l'article demandé.
         $id = Utils::request("id", -1);
 
         $articleManager = new ArticleManager();
-        $article = $articleManager->getArticleById($id);
+        $article = $articleManager->getArticleById($id, $shouldIncrementViews);
         
         $commentManager = new CommentManager();
         $comments = $commentManager->getAllCommentsByArticleId($id);

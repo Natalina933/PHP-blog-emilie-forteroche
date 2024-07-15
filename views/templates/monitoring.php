@@ -42,8 +42,8 @@
 </style>
 
 <body>
-    <h2>Monitoring des articles</h2>
     <form>
+        <h2>Monitoring des articles</h2>
         <div class="scrollable-table">
             <table border="1">
                 <thead>
@@ -95,9 +95,9 @@
         </div>
     </form>
 
-    <h2>Monitoring des commentaires</h2>
-
+    
     <form id="deleteForm" action="index.php?action=deleteComment" method="post">
+        <h2>Monitoring des commentaires</h2>
         <div class="scrollable-table">
             <table border="1">
                 <thead>

@@ -26,15 +26,19 @@ class ArticleManager extends AbstractEntityManager
      * @param int $id : l'id de l'article.
      * @return Article|null : un objet Article ou null si l'article n'existe pas.
      */
-    public function getArticleById(int $id): ?Article
+    public function getArticleById(int $id, $shouldIncrementViews = false): ?Article
     {
         $sql = "SELECT * FROM article WHERE id = :id";
         $result = $this->db->query($sql, ['id' => $id]);
         $article = $result->fetch();
         if ($article) {
-            $this->incrementViews($id);
+            if ($shouldIncrementViews) {
+                $this->incrementViews($id);
+            }
+
             return new Article($article);
         }
+
         return null;
     }
 
