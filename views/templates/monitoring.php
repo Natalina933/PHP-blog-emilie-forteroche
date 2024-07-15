@@ -15,7 +15,7 @@
     .scrollable-articles {
         max-height: 400px;
         overflow-y: auto;
-        border: 1px solid #ccc;
+        border: 1px solid #fff;
         margin-bottom: 20px;
     }
 
@@ -28,16 +28,28 @@
     td {
         padding: 8px;
         text-align: center;
-        border-bottom: 1px solid #ddd;
+        border-bottom: 1px solid #fff;
     }
 
     th {
-        background-color: #f2f2f2;
+        background-color: #D79922;
     }
 
     button {
         display: block;
         margin: 20px auto;
+        padding: 10px;
+        background-color: #D79922;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+
+        &:hover {
+            background-color: #B57234;
+        }
+
     }
 </style>
 
