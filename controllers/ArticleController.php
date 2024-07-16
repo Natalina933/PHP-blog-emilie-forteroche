@@ -1,12 +1,12 @@
-<?php 
+<?php
 
-class ArticleController 
+class ArticleController
 {
     /**
      * Affiche la page d'accueil.
      * @return void
      */
-    public function showHome() : void
+    public function showHome(): void
     {
         $articleManager = new ArticleManager();
         $articles = $articleManager->getAllArticles();
@@ -20,14 +20,13 @@ class ArticleController
      * Affiche le détail d'un article.
      * @return void
      */
-    public function showArticle($shouldIncrementViews = false) : void
+    public function showArticle($shouldIncrementViews = false): void
     {
         // Récupération de l'id de l'article demandé.
         $id = Utils::request("id", -1);
-
         $articleManager = new ArticleManager();
         $article = $articleManager->getArticleById($id, $shouldIncrementViews);
-        
+
         $commentManager = new CommentManager();
         $comments = $commentManager->getAllCommentsByArticleId($id);
 
@@ -43,7 +42,7 @@ class ArticleController
      * Affiche le formulaire d'ajout d'un article.
      * @return void
      */
-    public function addArticle() : void
+    public function addArticle(): void
     {
         $view = new View("Ajouter un article");
         $view->render("addArticle");
@@ -53,7 +52,8 @@ class ArticleController
      * Affiche la page "à propos".
      * @return void
      */
-    public function showApropos() {
+    public function showApropos()
+    {
         $view = new View("A propos");
         $view->render("apropos");
     }

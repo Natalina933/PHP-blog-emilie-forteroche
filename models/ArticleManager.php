@@ -117,13 +117,8 @@ class ArticleManager extends AbstractEntityManager
 
         // Pour chaque article, récupérer le nombre de commentaires et mettre à jour nbre_comment
         foreach ($articles as $article) {
-            $idArticle = $article->getId(); // Supposant que getId() retourne l'id de l'article
+            $idArticle = $article->getId(); // getId() retourne l'id de l'article
 
-            // Récupérer le nombre de commentaires pour cet article
-            // $nbreCommentaires = $commentManager->countCommentsByArticleId($idArticle); // Méthode à créer dans CommentManager
-
-            // Mettre à jour l'article avec le nombre de commentaires
-            // $article->setNbreCommentaires($nbreCommentaires); // Supposant que setNbreCommentaires() met à jour nbre_comment dans l'objet
             $this->updateArticle($article); // Méthode à créer pour sauvegarder les modifications dans la base de données
         }
     }

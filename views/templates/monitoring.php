@@ -107,7 +107,7 @@
         </div>
     </form>
 
-    
+
     <form id="deleteForm" action="index.php?action=deleteComment" method="post">
         <h2>Monitoring des commentaires</h2>
         <div class="scrollable-table">
