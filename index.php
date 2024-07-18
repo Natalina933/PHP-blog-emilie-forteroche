@@ -27,6 +27,7 @@ try {
              */
         case 'showArticle':
             $idArticle = Utils::request('id');
+            error_log("Action: showArticle, ID: $idArticle");
             $articleController = new ArticleController();
             $articleController->showArticle(true);
             break;

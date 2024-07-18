@@ -12,13 +12,6 @@
         margin-bottom: 20px;
     }
 
-    .scrollable-articles {
-        max-height: 400px;
-        overflow-y: auto;
-        border: 1px solid #fff;
-        margin-bottom: 20px;
-    }
-
     table {
         width: 100%;
         border-collapse: collapse;
@@ -28,7 +21,7 @@
     td {
         padding: 8px;
         text-align: center;
-        border-bottom: 1px solid #fff;
+        border-bottom: 1px solid #ccc;
     }
 
     th {
@@ -45,11 +38,10 @@
         border-radius: 5px;
         cursor: pointer;
         font-size: 16px;
+    }
 
-        &:hover {
-            background-color: #B57234;
-        }
-
+    button:hover {
+        background-color: #B57234;
     }
 </style>
 
@@ -65,6 +57,7 @@
                                 ID
                                 <?= ($sortArticle === 'id' && $orderArticle === 'ASC') ? '🔼' : '🔽' ?>
                             </a>
+                            
                         </th>
                         <th>
                             <a href="index.php?action=showMonitoring&sortArticle=title&orderArticle=<?= ($sortArticle === 'title' && $orderArticle === 'ASC') ? 'DESC' : 'ASC' ?>">
@@ -77,6 +70,7 @@
                                 Nombre de vues
                                 <?= ($sortArticle === 'nbre_vues' && $orderArticle === 'ASC') ? '🔼' : '🔽' ?>
                             </a>
+                         
                         </th>
                         <th>
                             <a href="index.php?action=showMonitoring&sortArticle=nbre_commentaires&orderArticle=<?= ($sortArticle === 'nbre_commentaires' && $orderArticle === 'ASC') ? 'DESC' : 'ASC' ?>">
@@ -98,6 +92,7 @@
                             <td><?= htmlspecialchars($article->getId()) ?></td>
                             <td><?= htmlspecialchars($article->getTitle()) ?></td>
                             <td><?= htmlspecialchars($article->getNbreVues()) ?></td>
+                            
                             <td><?= htmlspecialchars($article->getNbreCommentaires()) ?></td>
                             <td><?= htmlspecialchars($article->getDateCreation()->format('Y-m-d H:i:s')) ?></td>
                         </tr>
@@ -114,7 +109,7 @@
             <table border="1">
                 <thead>
                     <tr>
-                        <th>Cocher</th>
+                        <th><input type="checkbox" id="select-all"></th>
                         <th>
                             <a href="index.php?action=showMonitoring&sortComment=article_id&orderComment=<?= ($sortComment === 'article_id' && $orderComment === 'ASC') ? 'DESC' : 'ASC' ?>">
                                 ID Article
@@ -156,7 +151,7 @@
         </div>
         <button type="submit">Supprimer les commentaires sélectionnés</button>
     </form>
-
+    // Permet de gère la fonctionnalité de sélection de toutes les cases à cocher des commentaires.
     <script>
         document.getElementById('select-all').addEventListener('change', function() {
             const checkboxes = document.querySelectorAll('input[name="commentIds[]"]');
