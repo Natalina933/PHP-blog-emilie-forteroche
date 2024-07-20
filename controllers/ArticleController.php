@@ -22,9 +22,9 @@ class ArticleController
      */
     public function showArticle($shouldIncrementViews = false): void
     {
-        // Récupération de l'id de l'article demandé.
         $id = Utils::request("id", -1);
-        error_log("Show article ID: $id, shouldIncrementViews: " . ($shouldIncrementViews ? 'true' : 'false'));
+        error_log("showArticle called with ID: $id, shouldIncrementViews: " . ($shouldIncrementViews ? 'true' : 'false'));
+
         $articleManager = new ArticleManager();
         $article = $articleManager->getArticleById($id, $shouldIncrementViews);
 

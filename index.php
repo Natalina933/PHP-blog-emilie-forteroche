@@ -6,6 +6,7 @@ require_once 'config/autoload.php';
 // On récupère l'action demandée par l'utilisateur.
 // Si aucune action n'est demandée, on affiche la page d'accueil.
 $action = Utils::request('action', 'home');
+error_log("Action requested: " . $action);
 // Try catch global pour gérer les erreurs
 try {
     // Pour chaque action, on appelle le bon contrôleur et la bonne méthode.
@@ -31,7 +32,6 @@ try {
             $articleController = new ArticleController();
             $articleController->showArticle(true);
             break;
-
 
         case 'addArticle':
             $articleController = new ArticleController();
@@ -89,6 +89,7 @@ try {
             $monitoringController = new MonitoringController();
             $monitoringController->deleteComment();
 
+
             break;
 
 
@@ -97,6 +98,7 @@ try {
     }
 } catch (Exception $e) {
     // En cas d'erreur, on affiche la page d'erreur.
+    error_log("Exception caught: " . $e->getMessage());
     $errorView = new View('Erreur');
     $errorView->render('errorPage', ['errorMessage' => $e->getMessage()]);
 }

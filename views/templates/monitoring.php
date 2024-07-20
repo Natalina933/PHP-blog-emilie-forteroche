@@ -151,7 +151,7 @@
         </div>
         <button type="submit">Supprimer les commentaires sélectionnés</button>
     </form>
-    // Permet de gère la fonctionnalité de sélection de toutes les cases à cocher des commentaires.
+  
     <script>
         document.getElementById('select-all').addEventListener('change', function() {
             const checkboxes = document.querySelectorAll('input[name="commentIds[]"]');

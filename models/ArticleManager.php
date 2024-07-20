@@ -28,22 +28,39 @@ class ArticleManager extends AbstractEntityManager
      */
     public function getArticleById(int $id, $shouldIncrementViews = false): ?Article
     {
-        error_log("Get article by ID: $id, shouldIncrementViews: " . ($shouldIncrementViews ? 'true' : 'false'));
+        error_log("getArticleById called with ID: $id, shouldIncrementViews: " . ($shouldIncrementViews ? 'true' : 'false'));
         $sql = "SELECT * FROM article WHERE id = :id";
         $result = $this->db->query($sql, ['id' => $id]);
         $article = $result->fetch();
         if ($article) {
             if ($shouldIncrementViews) {
-
+                error_log("Incrementing views for article ID: $id");
                 $this->incrementViews($id);
             }
-
             return new Article($article);
         }
-
         return null;
     }
 
+    public function incrementViews(int $idArticle): void
+    {
+        error_log("incrementViews called for article ID: $idArticle");
+        $sql = "UPDATE article SET nbre_vues = nbre_vues + 1 WHERE id = :id";
+        $this->db->query($sql, ['id' => $idArticle]);
+    }
+    // Méthode pour mettre à jour le nombre de commentaires pour tous les articles
+    public function updateCommentCountForArticles()
+    {
+        // Récupérer tous les articles
+        $articles = $this->getAllArticles();
+
+        // Pour chaque article, récupérer le nombre de commentaires et mettre à jour nbre_comment
+        foreach ($articles as $article) {
+            $idArticle = $article->getId(); // getId() retourne l'id de l'article
+
+            $this->updateArticle($article); // Méthode à créer pour sauvegarder les modifications dans la base de données
+        }
+    }
     /**
      * Ajoute ou modifie un article.
      * On sait si l'article est un nouvel article car son id sera -1.
@@ -98,30 +115,5 @@ class ArticleManager extends AbstractEntityManager
     {
         $sql = "DELETE FROM article WHERE id = :id";
         $this->db->query($sql, ['id' => $id]);
-    }
-    /**
-     * Incrémente le compteur de vues pour un article donné.
-     * @param int $idArticle : l'id de l'article.
-     * @return bool : true si l'incrément a réussi, false sinon.
-     */
-    public function incrementViews(int $idArticle): void
-    {
-        $sql = "UPDATE article SET nbre_vues = nbre_vues + 1 WHERE id = :id";
-        $this->db->query($sql, ['id' => $idArticle]);
-    }
-    // Méthode pour mettre à jour le nombre de commentaires pour tous les articles
-    public function updateCommentCountForArticles()
-    {
-        $commentManager = new CommentManager();
-
-        // Récupérer tous les articles
-        $articles = $this->getAllArticles();
-
-        // Pour chaque article, récupérer le nombre de commentaires et mettre à jour nbre_comment
-        foreach ($articles as $article) {
-            $idArticle = $article->getId(); // getId() retourne l'id de l'article
-
-            $this->updateArticle($article); // Méthode à créer pour sauvegarder les modifications dans la base de données
-        }
     }
 }
