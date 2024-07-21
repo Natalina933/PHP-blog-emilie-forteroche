@@ -28,13 +28,11 @@ class ArticleManager extends AbstractEntityManager
      */
     public function getArticleById(int $id, $shouldIncrementViews = false): ?Article
     {
-        error_log("getArticleById called with ID: $id, shouldIncrementViews: " . ($shouldIncrementViews ? 'true' : 'false'));
         $sql = "SELECT * FROM article WHERE id = :id";
         $result = $this->db->query($sql, ['id' => $id]);
         $article = $result->fetch();
         if ($article) {
             if ($shouldIncrementViews) {
-                error_log("Incrementing views for article ID: $id");
                 $this->incrementViews($id);
             }
             return new Article($article);
@@ -44,7 +42,6 @@ class ArticleManager extends AbstractEntityManager
 
     public function incrementViews(int $idArticle): void
     {
-        error_log("incrementViews called for article ID: $idArticle");
         $sql = "UPDATE article SET nbre_vues = nbre_vues + 1 WHERE id = :id";
         $this->db->query($sql, ['id' => $idArticle]);
     }

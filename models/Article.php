@@ -80,7 +80,6 @@ class Article extends AbstractEntity
         }
         return $this->content;
     }
-    // Ajoutez les getters pour les nouvelles propriétés
 
     public function getNbreVues(): int
     {
