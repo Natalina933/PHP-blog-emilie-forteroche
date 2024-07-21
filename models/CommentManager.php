@@ -29,7 +29,7 @@ class CommentManager extends AbstractEntityManager
 
         if ($idArticle !== null) {
             $sql .= " WHERE id_article = :idArticle";
-            $params['idArticle'] = $idArticle;
+            $params['id_Article'] = $idArticle;
         }
 
         $sql .= " ORDER BY $sort $order";
@@ -163,5 +163,4 @@ class CommentManager extends AbstractEntityManager
         }
         return $comments;
     }
-
 }
