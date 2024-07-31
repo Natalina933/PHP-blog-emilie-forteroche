@@ -10,18 +10,19 @@ class MonitoringController
         $page = Utils::request('page', 1); // Page courante, par défaut 1
         $limit = 10; // Nombre d'articles par page
         $offset = ($page - 1) * $limit; // Offset pour la pagination
-
-        // Instanciation du manager
+        
+        // Instanciation du manager des articles
         $monitoringManager = new MonitoringManager();
 
         // Récupération des articles triés avec pagination
         $articles = $monitoringManager->getArticlesSorted($sortArticle, $orderArticle, $offset, $limit);
 
-        // Récupération des commentaires avec tri par id_article si spécifié
+        // Récupération des commentaires avec tri par id_article 
         $sortComment = Utils::request('sortComment', 'date_creation');
         $orderComment = Utils::request('orderComment', 'DESC');
-        $commentManager = new CommentManager();
-        $comments = $commentManager->getCommentsSorted($sortComment, $orderComment);
+
+        // Instanciation du manager des commentaires
+        $comments = $monitoringManager->getCommentsSorted($sortComment, $orderComment);
 
         // Affichage de la vue avec les données récupérées
         $view = new View('Monitoring');
@@ -48,7 +49,7 @@ class MonitoringController
         // Instancier le gestionnaire de commentaires
         $commentManager = new CommentManager();
 
-        // Parcourir tous les IDs des commentaires et les supprimer un par un
+        // Parcourir tous les IDs des commentaires et les supprimer 
         foreach ($commentIds as $commentId) {
             // Récupérer le commentaire par son ID
             $comment = $commentManager->getCommentById($commentId);

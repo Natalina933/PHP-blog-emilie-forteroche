@@ -53,11 +53,12 @@
                 <thead>
                     <tr>
                         <th>
-                            <a href="index.php?action=showMonitoring&sortArticle=id&orderArticle=<?= ($sortArticle === 'id' && $orderArticle === 'ASC') ? 'DESC' : 'ASC' ?>">
+                            <a href="index.php?action=showMonitoring&sortArticle=id&orderArticle=<?= 
+                            ($sortArticle === 'id' && $orderArticle === 'ASC') ? 'DESC' : 'ASC' ?>">
                                 ID
                                 <?= ($sortArticle === 'id' && $orderArticle === 'ASC') ? '🔼' : '🔽' ?>
                             </a>
-                            
+
                         </th>
                         <th>
                             <a href="index.php?action=showMonitoring&sortArticle=title&orderArticle=<?= ($sortArticle === 'title' && $orderArticle === 'ASC') ? 'DESC' : 'ASC' ?>">
@@ -70,7 +71,7 @@
                                 Nombre de vues
                                 <?= ($sortArticle === 'nbre_vues' && $orderArticle === 'ASC') ? '🔼' : '🔽' ?>
                             </a>
-                         
+
                         </th>
                         <th>
                             <a href="index.php?action=showMonitoring&sortArticle=nbre_commentaires&orderArticle=<?= ($sortArticle === 'nbre_commentaires' && $orderArticle === 'ASC') ? 'DESC' : 'ASC' ?>">
@@ -92,7 +93,6 @@
                             <td><?= htmlspecialchars($article->getId()) ?></td>
                             <td><?= htmlspecialchars($article->getTitle()) ?></td>
                             <td><?= htmlspecialchars($article->getNbreVues()) ?></td>
-                            
                             <td><?= htmlspecialchars($article->getNbreCommentaires()) ?></td>
                             <td><?= htmlspecialchars($article->getDateCreation()->format('Y-m-d H:i:s')) ?></td>
                         </tr>
@@ -151,7 +151,7 @@
         </div>
         <button type="submit">Supprimer les commentaires sélectionnés</button>
     </form>
-  
+
     <script>
         document.getElementById('select-all').addEventListener('change', function() {
             const checkboxes = document.querySelectorAll('input[name="commentIds[]"]');

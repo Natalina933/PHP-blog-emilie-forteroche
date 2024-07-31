@@ -29,16 +29,17 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `article`;
 CREATE TABLE IF NOT EXISTS `article` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_user` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_user` int NOT NULL,
   `title` varchar(255) NOT NULL,
   `content` text NOT NULL,
   `date_creation` datetime NOT NULL,
   `date_update` datetime DEFAULT NULL,
+  `nbre_vues` int DEFAULT '0',
+  `nbre_commentaires` int DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `link_article_user` (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
 --
 -- Déchargement des données de la table `article`
 --

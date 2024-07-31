@@ -23,4 +23,26 @@ class MonitoringManager extends AbstractEntityManager
         }
         return $articles;
     }
+    public function getCommentsSorted(string $sort, string $order): array
+    {
+        // Sécuriser les colonnes de tri pour éviter les injections SQL
+        $allowedSortColumns = ['id', 'pseudo', 'content', 'date_creation', 'id_article'];
+        if (!in_array($sort, $allowedSortColumns)) {
+            $sort = 'date_creation';
+        }
+        if ($order !== 'ASC' && $order !== 'DESC') {
+            $order = 'DESC';
+        }
+
+        // Modifier la requête SQL pour trier correctement par id_article si nécessaire
+        $orderByClause = ($sort === 'id_article') ? "id_article $order" : "$sort $order";
+        $sql = "SELECT * FROM comment ORDER BY $orderByClause";
+        $result = $this->db->query($sql);
+        $comments = [];
+
+        while ($comment = $result->fetch()) {
+            $comments[] = new Comment($comment);
+        }
+        return $comments;
+    }
 }
